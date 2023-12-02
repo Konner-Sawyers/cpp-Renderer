@@ -1,6 +1,21 @@
 ﻿  main.cpp
-C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(29,56): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(30,56): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(74,56): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(75,56): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(31,56): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(75,58): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(76,58): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(160,143): warning C4244: 'argument': conversion from 'T' to 'Uint8', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(160,110): warning C4244: 'argument': conversion from 'T' to 'Uint8', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Github\My_Git_Website\PhysicsSims\Simulator\Simulator\main.cpp(160,77): warning C4244: 'argument': conversion from 'T' to 'Uint8', possible loss of data
+          with
+          [
+              T=float
+          ]
   Simulator.vcxproj -> C:\Github\My_Git_Website\PhysicsSims\Simulator\x64\Debug\Simulator.exe
