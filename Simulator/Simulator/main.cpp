@@ -67,6 +67,10 @@ public:
 		std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
 	}
 
+	void UpdateVelocity(float timeDelta) {
+		vel = vel + force * (timeDelta);
+	}
+
 	void UpdatePosition(float timeDelta) {
 		pos = pos + vel * timeDelta;
 
@@ -154,11 +158,24 @@ int main() {
 
 		currentTime = std::chrono::high_resolution_clock::now();
 		timeDelta = std::chrono::duration<float>(currentTime - pastTime);
-		//std::cout << timeDelta.count();
 
 		for (int i = 0; i < sizeof(particlesArray) / sizeof(particlesArray[0]); i++) {
 			SDL_SetRenderDrawColor(simulationRenderer, particlesArray[i].getColor()[0], particlesArray[i].getColor()[1], particlesArray[i].getColor()[2], 255);
+			
+			//Collision checker
+			for (int j = i + 1; j < sizeof(particlesArray) / sizeof(particlesArray[0]); j++) {
+				if (pow(pow(particlesArray[i].getPosX() - particlesArray[j].getPosX(), 2) + pow(particlesArray[i].getPosY() - particlesArray[j].getPosY(), 2), 0.5) <= particlesArray[i].getRadius() + particlesArray[j].getRadius()) {
+					std::cout << "COLLISION" << std::endl;
+					float disX = (particlesArray[i].getPosX() - particlesArray[j].getPosX()/2);
+					float disY = (particlesArray[i].getPosY() - particlesArray[j].getPosY()/2);
+
+					
+
+				}
+			}
+			
 			particlesArray[i].BoundryCheck(windowWidth, windowHeight);
+			particlesArray[i].UpdateVelocity(timeDelta.count());
 			particlesArray[i].UpdatePosition(timeDelta.count());
 			particlesArray[i].drawArray(simulationRenderer);
 		}
