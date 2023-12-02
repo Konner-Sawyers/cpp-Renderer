@@ -42,18 +42,22 @@ void particle::SetVariables(glm::vec3 posIn, glm::vec3 velIn, glm::vec3 forceIn,
 
 void particle::BoundryCheck(int width, int height) {
 	if (pos[0] - radius <= 0) {
+		pos[0] = 0 + radius;
 		vel[0] *= -1;
 	}
 
 	if (pos[0] + radius >= width) {
+		pos[0] = width - radius;
 		vel[0] *= -1;
 	}
 
 	if (pos[1] - radius <= 0) {
+		pos[1] = 0 + radius;
 		vel[1] *= -1;
 	}
 
 	if (pos[1] + radius >= height) {
+		pos[1] = height - radius;
 		vel[1] *= -1;
 	}
 }
