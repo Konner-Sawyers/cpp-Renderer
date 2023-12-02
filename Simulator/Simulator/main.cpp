@@ -9,105 +9,8 @@
 #include <array>
 #include <vector>
 #include <chrono>
+#include "particle.h"
 
-
-class Particle {
-	glm::vec3 pos, vel, force, color;
-	float mass, radius;
-	SDL_Point pointsArray[360];
-public:
-	Particle(glm::vec3 posIn = { 0.f, 0.f, 0.f}, glm::vec3 velIn = { 0.f, 0.f, 0.f }, glm::vec3 forceIn = { 0.f, 0.f, 0.f }, glm::vec3 colorIn = { 255.f, 255.f, 255.f }, float massIn = 1, float radiusIn = 10) {
-		pos = posIn;
-		vel = velIn;
-		force = forceIn;
-		color = colorIn;
-		mass = massIn;
-		radius = radiusIn;
-
-
-		for (int i = 0; i < 360; i++) {
-
-			pointsArray[i].x = (cos(i * (M_PI / 180)) * radius) + pos[0];
-			pointsArray[i].y = (sin(i * (M_PI / 180)) * radius) + pos[1];
-
-		}
-		
-	}
-
-	void SetVariables(glm::vec3 posIn = { 0.f, 0.f, 0.f }, glm::vec3 velIn = { 0.f, 0.f, 0.f }, glm::vec3 forceIn = { 0.f, 0.f, 0.f }, glm::vec3 colorIn = { 255.f, 255.f, 255.f }, float massIn = 1, float radiusIn = 10) {
-		pos = posIn;
-		vel = velIn;
-		force = forceIn;
-		color = colorIn;
-		mass = massIn;
-		radius = radiusIn;
-	}
-
-	void BoundryCheck(int width, int height) {
-		if (pos[0] - radius <= 0) {
-			vel[0] *= -1;
-		}
-
-		if (pos[0] + radius >= width) {
-			vel[0] *= -1;
-		}
-
-		if (pos[1] - radius <= 0) {
-			vel[1] *= -1;
-		}
-
-		if (pos[1] + radius >= height) {
-			vel[1] *= -1;
-		}
-
-
-	}
-
-	void PrintPosition() {
-		std::cout << pos[0] << " " << pos[1] << " " << pos[2] << std::endl;
-	}
-
-	void UpdateVelocity(float timeDelta) {
-		vel = vel + force * (timeDelta);
-	}
-
-	void UpdatePosition(float timeDelta) {
-		pos = pos + vel * timeDelta;
-
-		for (int i = 0; i < 360; i++) {
-
-			pointsArray[i].x = ((cos(i * (M_PI / 180)) * radius)) + pos[0];
-			pointsArray[i].y = ((sin(i * (M_PI / 180)) * radius)) + pos[1];
-
-		}
-
-	}
-
-	float getPosX() {
-		return pos[0];
-	}
-
-	float getPosY() {
-		return pos[1];
-	}
-
-	float getPosZ() {
-		return pos[2];
-	}
-
-	float getRadius() {
-		return radius;
-	}
-
-	void drawArray(SDL_Renderer* simulationRenderer) {
-		SDL_RenderDrawPoints(simulationRenderer, pointsArray, 360);
-	}
-
-	glm::vec3 getColor() {
-		return color;
-	}
-
-};
 
 
 int main() {
@@ -115,7 +18,7 @@ int main() {
 	int windowWidth = 720;
 	int windowHeight = 560;
 
-	Particle particlesArray[30];
+	particle particlesArray[30];
 
 	for (int i = 0; i < sizeof(particlesArray)/sizeof(particlesArray[0]); i++) {
 		glm::vec3 posIn(rand() % windowWidth, rand() % windowHeight, 0.f), velIn((rand() % 15) - 8, (rand() % 15) - 8, 0.f), forceIn(0.f, 0.f, 0.f), colorIn(rand() % 255, 100.f, rand() % 255);
@@ -167,10 +70,7 @@ int main() {
 				if (pow(pow(particlesArray[i].getPosX() - particlesArray[j].getPosX(), 2) + pow(particlesArray[i].getPosY() - particlesArray[j].getPosY(), 2), 0.5) <= particlesArray[i].getRadius() + particlesArray[j].getRadius()) {
 					std::cout << "COLLISION" << std::endl;
 					float disX = (particlesArray[i].getPosX() - particlesArray[j].getPosX()/2);
-					float disY = (particlesArray[i].getPosY() - particlesArray[j].getPosY()/2);
-
-					
-
+					float disY = (particlesArray[i].getPosY() - particlesArray[j].getPosY() / 2);
 				}
 			}
 			
