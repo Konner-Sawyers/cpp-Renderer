@@ -18,6 +18,8 @@ public:
 
 	void SetVariables(glm::vec3 posIn = { 0.f, 0.f, 0.f }, glm::vec3 velIn = { 0.f, 0.f, 0.f }, glm::vec3 forceIn = { 0.f, 0.f, 0.f }, glm::vec3 colorIn = { 255.f, 255.f, 255.f }, float massIn = 1, float radiusIn = 10);
 
+	void SetPosition(glm::vec3 posIn);
+
 	void BoundryCheck(int width, int height);
 
 	void PrintPosition();

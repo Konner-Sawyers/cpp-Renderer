@@ -40,6 +40,10 @@ void particle::SetVariables(glm::vec3 posIn, glm::vec3 velIn, glm::vec3 forceIn,
 	radius = radiusIn;
 }
 
+void particle::SetPosition(glm::vec3 posIn) {
+	pos = posIn;
+}
+
 void particle::BoundryCheck(int width, int height) {
 	if (pos[0] - radius <= 0) {
 		pos[0] = 0 + radius;

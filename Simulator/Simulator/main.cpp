@@ -19,13 +19,13 @@ int main() {
 	int windowWidth = 720;
 	int windowHeight = 560;
 
-	particle particlesArray[6];
+	particle particlesArray[15];
 	int max_speed;
 	max_speed = 500;
 
 	for (int i = 0; i < sizeof(particlesArray)/sizeof(particlesArray[0]); i++) {
 		glm::vec3 posIn(rand() % windowWidth, rand() % windowHeight, 0.f), velIn((rand() % max_speed) - max_speed/2, (rand() % max_speed) - max_speed/2, 0.f), forceIn(0.f, 0.f, 0.f), colorIn(rand() % 255, 100.f, rand() % 255);
-		particlesArray[i].SetVariables(posIn, velIn, forceIn, colorIn, 5.f, 120.f);
+		particlesArray[i].SetVariables(posIn, velIn, forceIn, colorIn, 5.f, 25.f);
 	}
 	
 
@@ -85,17 +85,14 @@ int main() {
 			//Collision checker
 			for (int j = i + 1; j < sizeof(particlesArray) / sizeof(particlesArray[0]); j++) {
 				if (pow(pow(particlesArray[i].getPosX() - particlesArray[j].getPosX(), 2) + pow(particlesArray[i].getPosY() - particlesArray[j].getPosY(), 2), 0.5) <= particlesArray[i].getRadius() + particlesArray[j].getRadius()) {
-					std::cout << "COLLISION" << std::endl;
 					float disX = (particlesArray[j].getPosX() - particlesArray[i].getPosX());
 					float disY = (particlesArray[j].getPosY() - particlesArray[i].getPosY());
 
 					float disH = std::sqrt((disX * disX) + (disY * disY));
-
 					float adjustDistance = (particlesArray[j].getRadius() + particlesArray[i].getRadius() - disH)/2;
 
 
 
-					//float directionPrimary = atan(disX / disY);
 					float directionSecondary = atan(disY / disX);
 					float directionPrimary = directionSecondary + M_PI;
 					if (disX > 0 && disY > 0) {
@@ -113,20 +110,21 @@ int main() {
 
 						
 
-
-
-					//adjustDistance * (cos(directionPrimary));
-
-
-
+					particlesArray[j].SetPosition(glm::vec3(adjustDistance * (cos(directionPrimary)) + particlesArray[j].getPosX(), adjustDistance * (sin(directionPrimary)) + particlesArray[j].getPosY(), 0.f));
+					particlesArray[i].SetPosition(glm::vec3(adjustDistance * (cos(directionSecondary)) + particlesArray[i].getPosX(), adjustDistance * (sin(directionSecondary)) + particlesArray[i].getPosY(), 0.f));
 					
-					SDL_SetRenderDrawColor(simulationRenderer, 255, 255, 255, 255);
 
+					//Momentum Functions
+					//float postCollisionVelocity1;
+					//float postCollisionVelocity2;
+					//postCollisionVelocity1 = (())
+
+
+					SDL_SetRenderDrawColor(simulationRenderer, 255, 255, 255, 255);
 					SDL_RenderDrawLine(simulationRenderer, particlesArray[i].getPosX(), particlesArray[i].getPosY(), adjustDistance * (cos(directionPrimary)) + particlesArray[i].getPosX(), adjustDistance * (sin(directionPrimary))+ particlesArray[i].getPosY());
 					SDL_RenderDrawLine(simulationRenderer, particlesArray[j].getPosX(), particlesArray[j].getPosY(), adjustDistance * (cos(directionSecondary)) + particlesArray[j].getPosX(), adjustDistance * (sin(directionSecondary)) + particlesArray[j].getPosY());
-					//SDL_RenderDrawLine(simulationRenderer, particlesArray[j].getPosX(), particlesArray[j].getPosY(), particlesArray[i].getPosX(), particlesArray[i].getPosY());
+					SDL_SetRenderDrawColor(simulationRenderer, particlesArray[i].getColor()[0], particlesArray[i].getColor()[1], particlesArray[i].getColor()[2], 255);
 
-					//system("cls");
 					std::cout << disH << std::endl;
 				}
 			}
