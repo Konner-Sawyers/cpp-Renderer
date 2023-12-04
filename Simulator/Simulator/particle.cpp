@@ -44,6 +44,10 @@ void particle::SetPosition(glm::vec3 posIn) {
 	pos = posIn;
 }
 
+void particle::SetVelocity(glm::vec3 velIn) {
+	vel = velIn;
+}
+
 void particle::BoundryCheck(int width, int height) {
 	if (pos[0] - radius <= 0) {
 		pos[0] = 0 + radius;
@@ -98,8 +102,24 @@ float particle::getPosZ() {
 	return pos[2];
 }
 
+float particle::getVelX() {
+	return vel[0];
+}
+
+float particle::getVelY() {
+	return vel[1];
+}
+
+float particle::getVelZ() {
+	return vel[2];
+}
+
 float particle::getRadius() {
 	return radius;
+}
+
+float particle::getMass() {
+	return mass;
 }
 
 void particle::drawArray(SDL_Renderer* simulationRenderer) {

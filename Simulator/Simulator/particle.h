@@ -20,6 +20,8 @@ public:
 
 	void SetPosition(glm::vec3 posIn);
 
+	void SetVelocity(glm::vec3 velIn);
+
 	void BoundryCheck(int width, int height);
 
 	void PrintPosition();
@@ -34,7 +36,15 @@ public:
 
 	float getPosZ();
 
+	float getVelX();
+
+	float getVelY();
+
+	float getVelZ();
+
 	float getRadius();
+
+	float getMass();
 
 	void drawArray(SDL_Renderer* simulationRenderer);
 
