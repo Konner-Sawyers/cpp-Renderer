@@ -6,7 +6,7 @@
 * DEFINE ENUM
 */
 
-static enum MESH {RECTANGLE, TRIANGLE};
+static enum Shape {RECTANGLE, TRIANGLE};
 
 
 /*

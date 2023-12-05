@@ -24,13 +24,7 @@
     <ClCompile Include="World_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Static_Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Static_Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Static_Triangle.cpp">
+    <ClCompile Include="Rectangle_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,16 +35,10 @@
     <ClInclude Include="World_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Static_Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Primitives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Static_Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Static_Triangle.h">
+    <ClInclude Include="Rectangle_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

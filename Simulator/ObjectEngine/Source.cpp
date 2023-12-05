@@ -12,9 +12,7 @@
 #include <conio.h>
 #include "Engine_Window.h"
 #include "World_Object.h"
-#include "Static_Object.h"
-#include "Static_Triangle.h"
-#include "Static_Rectangle.h"
+#include "Rectangle_Object.h"
 #include "Primitives.h"
 
 int main() {
@@ -26,15 +24,18 @@ int main() {
 
 	int CAMERA_POS_X = 0;
 	int CAMERA_POS_Y = 0;
+	float ZOOM = 1;
+
+	float ZOOM_SPEED = .01;
 
 	Engine_Window window;
 
 	//Defining rectangle objects
-	Static_Rectangle Static_Rectangle_Array[3];
+	Rectangle_Object Static_Rectangle_Array[3];
 	for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-		if (i == 0) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 300.f, 300.f }, 55); }
-		if (i == 1) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 100.f, 700.f }, 55); }
-		if (i == 2) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 300.f, 10.f }, 55); }
+		if (i == 0) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 300.f }, 55); }
+		if (i == 1) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 100.f, 700.f }, 55); }
+		if (i == 2) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 10.f }, 55); }
 	};
 
 	/*
@@ -48,6 +49,7 @@ int main() {
 	SDL_Event Events;
 
 	int Speed = 1;
+	
 
 	bool simRunning = true;
 
@@ -55,8 +57,10 @@ int main() {
 	bool moveDown = false;
 	bool moveRight = false;
 	bool moveLeft = false;
+	bool zoomIn = false;
+	bool zoomOut = false;
 
-	SDL_Texture* obama = IMG_LoadTexture(window.simulation_renderer, "ObamaFace.png");
+	SDL_Texture* wall = IMG_LoadTexture(window.simulation_renderer, "wall.png");
 
 
 	while (simRunning) {
@@ -83,6 +87,11 @@ int main() {
 				case SDLK_d:
 					moveRight = true;
 					break;
+				case SDLK_r:
+					zoomIn = true;
+					break;
+				case SDLK_f:
+					zoomOut = true;
 				}
 			}
 
@@ -100,10 +109,15 @@ int main() {
 				case SDLK_d:
 					moveRight = false;
 					break;
+				case SDLK_r:
+					zoomIn = false;
+					break;
+				case SDLK_f:
+					zoomOut = false;
 				}
 			}
 
-			std::cout << (CAMERA_POS_X) << " : " << (CAMERA_POS_Y) << std::endl;
+			std::cout << (CAMERA_POS_X) << " : " << (CAMERA_POS_Y) << " ZOOM: " << ZOOM << std::endl;
 
 		}
 
@@ -119,18 +133,31 @@ int main() {
 		else if (moveRight == true) {
 			CAMERA_POS_X -= Speed;
 		}
+		if (zoomIn == true) {
+			ZOOM += ZOOM_SPEED;
+			if (ZOOM >= 2) {
+				ZOOM = 2;
+			}
+		}
+		else if (zoomOut == true) {
+			ZOOM -= ZOOM_SPEED;
+			if (ZOOM <= .5) {
+				ZOOM = .5;
+			}
+		}
+
 
 		//Translates all objects to match relative position with camera
 		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].position.x + CAMERA_POS_X;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].position.x + CAMERA_POS_X;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].position.x + CAMERA_POS_X;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].position.x + CAMERA_POS_X;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[0].position.x + CAMERA_POS_X) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[1].position.x + CAMERA_POS_X) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[2].position.x + CAMERA_POS_X) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[3].position.x + CAMERA_POS_X) * ZOOM;
 
-			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].position.y + CAMERA_POS_Y;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].position.y + CAMERA_POS_Y;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].position.y + CAMERA_POS_Y;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].position.y + CAMERA_POS_Y;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[0].position.y + CAMERA_POS_Y) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[1].position.y + CAMERA_POS_Y) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[2].position.y + CAMERA_POS_Y) * ZOOM;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[3].position.y + CAMERA_POS_Y) * ZOOM;
 		}
 
 		//Clear Screen
@@ -139,7 +166,7 @@ int main() {
 
 		//Draws all vertex array points
 		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			SDL_RenderGeometry(window.simulation_renderer, obama, Static_Rectangle_Array[i].VERTEX_ARRAY, 4, Static_Rectangle_Array[i].INDICIES_ARRAY, 6);
+			SDL_RenderGeometry(window.simulation_renderer, wall, Static_Rectangle_Array[i].VERTEX_ARRAY, sizeof(Static_Rectangle_Array[i].VERTEX_ARRAY)/ sizeof(Static_Rectangle_Array[i].VERTEX_ARRAY[0]), Static_Rectangle_Array[i].INDICIES_ARRAY, sizeof(Static_Rectangle_Array[i].INDICIES_ARRAY)/sizeof(Static_Rectangle_Array[i].INDICIES_ARRAY[0]));
 		}
 
 
