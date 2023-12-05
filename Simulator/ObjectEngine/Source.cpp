@@ -13,9 +13,9 @@
 #include "Engine_Window.h"
 #include "World_Object.h"
 #include "Static_Object.h"
-//#include "Primitives.h"
 #include "Static_Triangle.h"
 #include "Static_Rectangle.h"
+#include "Primitives.h"
 
 int main() {
 
@@ -43,6 +43,8 @@ int main() {
 	 *
 	 */
 
+	std::cout << RECT_VERTEX_ARRAY[0].position.x;
+	
 	SDL_Event Events;
 
 	int Speed = 1;
@@ -129,7 +131,6 @@ int main() {
 			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].position.y + CAMERA_POS_Y;
 			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].position.y + CAMERA_POS_Y;
 			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].position.y + CAMERA_POS_Y;
-
 		}
 
 		//Clear Screen
@@ -138,7 +139,6 @@ int main() {
 
 		//Draws all vertex array points
 		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			//SDL_SetRenderDrawColor(window.simulation_renderer, 255.f, 255.f, 255.f, 255.f);
 			SDL_RenderGeometry(window.simulation_renderer, obama, Static_Rectangle_Array[i].VERTEX_ARRAY, 4, Static_Rectangle_Array[i].INDICIES_ARRAY, 6);
 		}
 
