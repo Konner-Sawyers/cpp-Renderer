@@ -17,7 +17,7 @@
 #include "Static_Triangle.h"
 #include "Static_Rectangle.h"
 
-int main(){
+int main() {
 
 	std::cout << "Launching Program..." << std::endl;
 
@@ -31,23 +31,28 @@ int main(){
 
 	//Defining rectangle objects
 	Static_Rectangle Static_Rectangle_Array[3];
-		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			if (i == 0) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 500.f, 300.f }, 55); }
-			if (i == 1) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 100.f, 700.f }, 55); }
-			if (i == 2) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 300.f, 10.f }, 55); }
-		};
+	for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
+		if (i == 0) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 300.f, 300.f }, 55); }
+		if (i == 1) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 100.f, 700.f }, 55); }
+		if (i == 2) { Static_Rectangle_Array[i] = Static_Rectangle(100.f, 100.f, glm::vec2{ 300.f, 10.f }, 55); }
+	};
 
 	/*
 	 *
-	 *CONVER PROGRAM TO USE RENDER_GEOMETRY INSTEAD OF RENDER_LINES
+	 *CONVERT PROGRAM TO USE RENDER_GEOMETRY INSTEAD OF RENDER_LINES
 	 *
 	 */
 
 	SDL_Event Events;
 
-	int Speed = 8;
+	int Speed = 1;
 
 	bool simRunning = true;
+
+	bool moveUp = false;
+	bool moveDown = false;
+	bool moveRight = false;
+	bool moveLeft = false;
 
 	SDL_Texture* obama = IMG_LoadTexture(window.simulation_renderer, "ObamaFace.png");
 
@@ -55,52 +60,77 @@ int main(){
 	while (simRunning) {
 
 		while (SDL_PollEvent(&Events) != 0) {
-			
+
 			if (Events.type == SDL_QUIT) {
 				simRunning = false;
 			}
 
+
 			//Handling for keyboard input
 			if (Events.type == SDL_KEYDOWN) {
-				if (Events.key.keysym.sym == SDLK_w) {
-					CAMERA_POS_Y += Speed;
-				}
-				if (Events.key.keysym.sym == SDLK_s) {
-					CAMERA_POS_Y -= Speed;
-				}
-				if (Events.key.keysym.sym == SDLK_a) {
-					CAMERA_POS_X += Speed;
-				}
-				if (Events.key.keysym.sym == SDLK_d) {
-					CAMERA_POS_X -= Speed;
+				switch (Events.key.keysym.sym) {
+				case SDLK_w:
+					moveUp = true;
+					break;
+				case SDLK_s:
+					moveDown = true;
+					break;
+				case SDLK_a:
+					moveLeft = true;
+					break;
+				case SDLK_d:
+					moveRight = true;
+					break;
 				}
 			}
 
-			//Translates all objects to match relative position with camera
-			for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-				Static_Rectangle_Array[i].VERTEX_ARRAY[0].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[1].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[2].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[3].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[4].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[4].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[5].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[5].x + CAMERA_POS_X;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[6].x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[6].x + CAMERA_POS_X;
-
-				Static_Rectangle_Array[i].VERTEX_ARRAY[0].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[1].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[2].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[3].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[4].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[4].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[5].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[5].y + CAMERA_POS_Y;
-				Static_Rectangle_Array[i].VERTEX_ARRAY[6].y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[6].y + CAMERA_POS_Y;
-
+			if (Events.type == SDL_KEYUP) {
+				switch (Events.key.keysym.sym) {
+				case SDLK_w:
+					moveUp = false;
+					break;
+				case SDLK_s:
+					moveDown = false;
+					break;
+				case SDLK_a:
+					moveLeft = false;
+					break;
+				case SDLK_d:
+					moveRight = false;
+					break;
+				}
 			}
-			
+
 			std::cout << (CAMERA_POS_X) << " : " << (CAMERA_POS_Y) << std::endl;
 
 		}
 
+		if (moveUp == true) {
+			CAMERA_POS_Y += Speed;
+		}
+		else if (moveDown == true) {
+			CAMERA_POS_Y -= Speed;
+		}
+		if (moveLeft == true) {
+			CAMERA_POS_X += Speed;
+		}
+		else if (moveRight == true) {
+			CAMERA_POS_X -= Speed;
+		}
 
+		//Translates all objects to match relative position with camera
+		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
+			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].position.x + CAMERA_POS_X;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].position.x + CAMERA_POS_X;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].position.x + CAMERA_POS_X;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.x = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].position.x + CAMERA_POS_X;
+
+			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[0].position.y + CAMERA_POS_Y;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[1].position.y + CAMERA_POS_Y;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[2].position.y + CAMERA_POS_Y;
+			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.y = Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD_POS[3].position.y + CAMERA_POS_Y;
+
+		}
 
 		//Clear Screen
 		SDL_SetRenderDrawColor(window.simulation_renderer, 50.f, 0.f, 50.f, 255.f);
@@ -108,9 +138,10 @@ int main(){
 
 		//Draws all vertex array points
 		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			SDL_SetRenderDrawColor(window.simulation_renderer, i * 50.f, 255.f, 255.f, 255.f);
-			SDL_RenderDrawLines(window.simulation_renderer, Static_Rectangle_Array[i].VERTEX_ARRAY, 7);
+			//SDL_SetRenderDrawColor(window.simulation_renderer, 255.f, 255.f, 255.f, 255.f);
+			SDL_RenderGeometry(window.simulation_renderer, obama, Static_Rectangle_Array[i].VERTEX_ARRAY, 4, Static_Rectangle_Array[i].INDICIES_ARRAY, 6);
 		}
+
 
 		//Crosshair
 		SDL_SetRenderDrawColor(window.simulation_renderer, 255.f, 255.f, 255.f, 255.f);
@@ -119,6 +150,7 @@ int main(){
 		SDL_RenderPresent(window.simulation_renderer);
 	}
 
+	
 
 	return 0;
 }
