@@ -19,8 +19,8 @@ int main() {
 
 	std::cout << "Launching Program..." << std::endl;
 
-	int SIMULATION_WINDOW_WIDTH = 720;
-	int SIMULATION_WINDOW_HEIGHT = 480;
+	int SIMULATION_WINDOW_WIDTH = 1080;
+	int SIMULATION_WINDOW_HEIGHT = 800;
 
 	float CAMERA_POS_X = 0;
 	float CAMERA_POS_Y = 0;
@@ -32,7 +32,7 @@ int main() {
 	const int testValue = sizeof(RECT_INDICIES_ARRAY);
 	int testArray[testValue];
 
-	Engine_Window window;
+	Engine_Window window(SIMULATION_WINDOW_WIDTH, SIMULATION_WINDOW_HEIGHT);
 
 	//Defining rectangle objects
 	Rectangle_Object Static_Rectangle_Array[3];
@@ -68,6 +68,8 @@ int main() {
 
 
 	while (simRunning) {
+
+		SDL_GetWindowSize(window.engine_window, &SIMULATION_WINDOW_WIDTH, &SIMULATION_WINDOW_HEIGHT);
 
 		while (SDL_PollEvent(&Events) != 0) {
 

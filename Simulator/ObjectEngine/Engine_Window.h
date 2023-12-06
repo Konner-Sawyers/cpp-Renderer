@@ -10,6 +10,10 @@ public:
 	SDL_Renderer* simulation_renderer;
 
 	Engine_Window(int = 720, int = 560);
+
+	int Get_Size();
 };
+
+
 
 #endif
