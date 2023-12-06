@@ -20,13 +20,17 @@ int main() {
 	std::cout << "Launching Program..." << std::endl;
 
 	int SIMULATION_WINDOW_WIDTH = 720;
-	int SIMULATION_WINDOW_HEIGHT = 560;
+	int SIMULATION_WINDOW_HEIGHT = 480;
 
-	int CAMERA_POS_X = 0;
-	int CAMERA_POS_Y = 0;
+	float CAMERA_POS_X = 0;
+	float CAMERA_POS_Y = 0;
 	float ZOOM = 1;
 
 	float ZOOM_SPEED = .01;
+	float Speed = 2;
+
+	const int testValue = sizeof(RECT_INDICIES_ARRAY);
+	int testArray[testValue];
 
 	Engine_Window window;
 
@@ -48,7 +52,7 @@ int main() {
 	
 	SDL_Event Events;
 
-	int Speed = 1;
+
 	
 
 	bool simRunning = true;
@@ -122,16 +126,16 @@ int main() {
 		}
 
 		if (moveUp == true) {
-			CAMERA_POS_Y += Speed;
-		}
-		else if (moveDown == true) {
 			CAMERA_POS_Y -= Speed;
 		}
+		else if (moveDown == true) {
+			CAMERA_POS_Y += Speed;
+		}
 		if (moveLeft == true) {
-			CAMERA_POS_X += Speed;
+			CAMERA_POS_X -= Speed;
 		}
 		else if (moveRight == true) {
-			CAMERA_POS_X -= Speed;
+			CAMERA_POS_X += Speed;
 		}
 		if (zoomIn == true) {
 			ZOOM += ZOOM_SPEED;
@@ -149,16 +153,10 @@ int main() {
 
 		//Translates all objects to match relative position with camera
 		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[0].position.x + CAMERA_POS_X) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[1].position.x + CAMERA_POS_X) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[2].position.x + CAMERA_POS_X) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.x = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[3].position.x + CAMERA_POS_X) * ZOOM;
-
-			Static_Rectangle_Array[i].VERTEX_ARRAY[0].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[0].position.y + CAMERA_POS_Y) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[1].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[1].position.y + CAMERA_POS_Y) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[2].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[2].position.y + CAMERA_POS_Y) * ZOOM;
-			Static_Rectangle_Array[i].VERTEX_ARRAY[3].position.y = (Static_Rectangle_Array[i].VERTEX_ARRAY_WORLD[3].position.y + CAMERA_POS_Y) * ZOOM;
+			Static_Rectangle_Array[i].ZoomUpdate(ZOOM, SIMULATION_WINDOW_WIDTH, SIMULATION_WINDOW_HEIGHT, CAMERA_POS_X, CAMERA_POS_Y);
 		}
+
+		std::cout << Static_Rectangle_Array[0].VERTEX_ARRAY[0].position.x << " : " << Static_Rectangle_Array[0].VERTEX_ARRAY[0].position.y << std::endl;
 
 		//Clear Screen
 		SDL_SetRenderDrawColor(window.simulation_renderer, 50.f, 0.f, 50.f, 255.f);

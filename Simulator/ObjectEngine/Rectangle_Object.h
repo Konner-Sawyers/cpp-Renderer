@@ -49,6 +49,8 @@ public:
 		}
 	};
 
+	void ZoomUpdate(float ZOOM, int WIDTH, int HEIGHT, float CAM_X, float CAM_Y);
+
 };
 
 #endif
