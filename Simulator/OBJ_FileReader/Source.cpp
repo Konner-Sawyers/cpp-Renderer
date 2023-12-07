@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <SDL.h>
+#include <cstring>
 
 int main() {
 
@@ -15,12 +16,13 @@ int main() {
 
 	std::string v = "v ";
 	std::string f = "f ";
+	std::string vt = "vt ";
 	
 	std::string currentLine;
-	std::fstream theFile("test_object.obj");
+	std::fstream theFile("untitled.obj");
 	if (theFile.is_open()) {
 		while (std::getline(theFile, currentLine)) {
-			std::cout << currentLine << '\n';
+			//std::cout << currentLine << '\n';
 			std::stringstream ss(currentLine);
 			while (std::getline(ss, currentLine, ' ')) {
 				if (currentLine == "v") {
@@ -38,69 +40,140 @@ int main() {
 
 	else std::cout << "File not opened";
 
-	std::cout << "VERT: " << vertCount << std::endl;
-	std::cout << "IND: " << indCount << std::endl;
+	//std::cout << "VERT: " << vertCount << std::endl;
+	//std::cout << "IND: " << indCount << std::endl;
 
 	const int VERTICIES_COUNT = vertCount;
-	const int INDICIES_COUNT = indCount;
-
-
-
-	std::cout << "SECOND RUN" << std::endl;
+	const int INDICIES_COUNT = indCount * 3;
 
 	SDL_Vertex *VERTEX_ARRAY = new SDL_Vertex[VERTICIES_COUNT];
 	int *INDICIES_ARRAY =  new int[INDICIES_COUNT];
 	
-	theFile.open("test_object.obj");
+	theFile.open("untitled.obj");
 
-	std::vector<std::string> lineVec;
+	std::vector<std::vector<std::string>> vecLines;
+	std::vector<std::string> initVecLines;
+
+	std::vector<std::string> indLines;
+
+	std::vector<std::vector<std::string>> texLines;
+	std::vector<std::string> initTexLines;
+	
 
 	if (theFile.is_open()) {
 		while (std::getline(theFile, currentLine)) {
 			std::stringstream ss(currentLine);
-			while (std::getline(ss, currentLine, ' ')) {
-				lineVec.push_back(currentLine);
+			if (std::strstr(currentLine.c_str(),v.c_str())) {
+				//std::cout << "VERTEX: " << currentLine << std::endl;
+				
+				while (std::getline(ss, currentLine, ' ')) {
+					initVecLines.push_back(currentLine);
+					//std::cout << "HERE";
+				}
+				vecLines.push_back(initVecLines);
+				initVecLines.pop_back();
+				initVecLines.pop_back();
+				initVecLines.pop_back();
+				initVecLines.pop_back();
+
+			}
+			else if (std::strstr(currentLine.c_str(), f.c_str())) {
+				//std::cout << "INDICIES: " << currentLine << std::endl;
+				while (std::getline(ss, currentLine, '/')) {
+					std::stringstream sss(currentLine);
+					while (std::getline(sss, currentLine, ' ')) {
+						indLines.push_back(currentLine);
+					}
+					
+
+				}
+			}
+
+			else if (std::strstr(currentLine.c_str(), vt.c_str())) {
+				//std::cout << "TEXTURE: " << currentLine << std::endl;
+				while (std::getline(ss, currentLine, ' ')) {
+					initTexLines.push_back(currentLine);
+				}
+				texLines.push_back(initTexLines);
+				initTexLines.pop_back();
+				initTexLines.pop_back();
+				initTexLines.pop_back();
 			}
 		}
 		theFile.close();
 	}
 
-	
+	int IND_INDEX = 0;
 
-	else std::cout << "FAILED TO OPEN FILE";
-
-
-	int vertIndex = 0;
-	int indIndex = 0;
-
-	for (int i = 0; i < lineVec.size(); i++) {
-		std::cout << "What im checking : " << lineVec[i] << std:: endl;
-		//std::cout << lineVec[i] << std::endl;
-		if (lineVec[i] == "v") {
-			VERTEX_ARRAY[vertIndex] = SDL_Vertex{ {std::stof(lineVec[i + 1]), std::stof(lineVec[i + 2])},{255, 255, 255, 255}, {0,0} };
-			vertIndex += 1;
+	for (int i = 0; i < vecLines.size(); i++) { 
+		for (int j = 0; j < vecLines[i].size(); j++) {
+			//std::cout << vecLines[i][j] << " ";
 		}
-
-		if (lineVec[i] == "f") {
-			INDICIES_ARRAY[indIndex + 0] = std::stoi(lineVec[i + 1]);
-			INDICIES_ARRAY[indIndex + 1] = std::stoi(lineVec[i + 2]);
-			INDICIES_ARRAY[indIndex + 2] = std::stoi(lineVec[i + 3]);
-		}
+		//std::cout << " END LINE " << std::endl;
 	}
+
+	for (int i = 0; i < texLines.size(); i++) {
+		for (int j = 0; j < texLines[i].size(); j++) {
+			//std::cout << texLines[i][j] << " ";
+		}
+		//std::cout << " END LINE " << std::endl;
+	}
+
+	for (int i = 0; i < indLines.size(); i += 7) {
+
+
+
+		/*
+		std::cout << indLines[i] << std::endl;
+		std::cout << "VERT INDEX: " << indLines[i + 1] << "TEX INDEX" << indLines[i + 2] << std::endl;
+		std::cout << "VERT INDEX: " << indLines[i + 3] << "TEX INDEX" << indLines[i + 4] << std::endl;
+		std::cout << "VERT INDEX: " << indLines[i + 5] << "TEX INDEX" << indLines[i + 6] << std::endl;
+
+		std::cout << "Vertex at index " << (std::stoi(indLines[i + 1]) - 1) << " /// " << vecLines[std::stoi(indLines[i + 1]) - 1][1] << " : " << vecLines[std::stoi(indLines[i + 1]) - 1][2] << std::endl;
+		std::cout << "Tex at index " << (std::stoi(indLines[i + 2]) - 1) << " /// " << texLines[std::stoi(indLines[i + 2]) - 1][1] << " : " << texLines[std::stoi(indLines[i + 2]) - 1][2] << std::endl;
+		*/
+
+
+
+		INDICIES_ARRAY[IND_INDEX] = std::stoi(indLines[i + 1]) - 1;
+		IND_INDEX++;
+		INDICIES_ARRAY[IND_INDEX] = std::stoi(indLines[i + 3]) - 1;
+		IND_INDEX++;
+		INDICIES_ARRAY[IND_INDEX] = std::stoi(indLines[i + 5]) - 1;
+		IND_INDEX++;
+
+		VERTEX_ARRAY[stoi(indLines[i + 1])-1] = SDL_Vertex{
+			{std::stof(vecLines[std::stoi(indLines[i + 1]) - 1][1]), std::stof(vecLines[std::stoi(indLines[i + 1]) - 1][2])},
+			{255, 255, 255, 255}, 
+			{std::stof(texLines[std::stoi(indLines[i + 2]) - 1][1]), std::stof(texLines[std::stoi(indLines[i + 2]) - 1][2])} };
+
+		VERTEX_ARRAY[stoi(indLines[i + 3])-1] = SDL_Vertex{
+			{std::stof(vecLines[std::stoi(indLines[i + 3]) - 1][1]), std::stof(vecLines[std::stoi(indLines[i + 3]) - 1][2])},
+			{255, 255, 255, 255},
+			{std::stof(texLines[std::stoi(indLines[i + 4]) - 1][1]), std::stof(texLines[std::stoi(indLines[i + 4]) - 1][2])} };
+
+		VERTEX_ARRAY[stoi(indLines[i + 5])-1] = SDL_Vertex{
+			{std::stof(vecLines[std::stoi(indLines[i + 5]) - 1][1]), std::stof(vecLines[std::stoi(indLines[i + 5]) - 1][2])},
+			{255, 255, 255, 255},
+			{std::stof(texLines[std::stoi(indLines[i + 6]) - 1][1]), std::stof(texLines[std::stoi(indLines[i + 6]) - 1][2])} };
+	}
+
+
+	/*
 	for (int i = 0; i < VERTICIES_COUNT; i++) {
-		std::cout << "RUN " << i << ": " << VERTEX_ARRAY[i].position.x << " : " << VERTEX_ARRAY[i].position.y << std::endl;
+		std::cout << "INDEX " << i << " " << VERTEX_ARRAY[i].position.x << " : " << VERTEX_ARRAY[i].position.y << std::endl;
 	}
 
-	for (int i = 0; i < INDICIES_COUNT*3; i++) {
+	std::cout << "INDICIES :";
+	for (int i = 0; i < INDICIES_COUNT; i++) {
 		std::cout << INDICIES_ARRAY[i] << " ";
 	}
-
+	*/
 	return 0;
 }
 
 
 /*
 TODO
-
 Delim the currentLine and feed the imputs into arrays
 */
