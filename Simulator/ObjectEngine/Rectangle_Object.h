@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/vec2.hpp>
 #include <SDL.h>
+#include <stdio.h>
+#include <iostream>
 
 class Rectangle_Object : public World_Object
 {
@@ -17,6 +19,7 @@ public:
 	Rectangle_Object(glm::vec2 scaleIn = { 1,1 }, glm::vec2 posIn = { 0,0 }, float massIn = 1) : World_Object(scaleIn, posIn, massIn) {
 
 		
+		std::cout << "FILE CALLED" << std::endl;
 
 		for (int i = 0; i < 4; i++) {
 			VERTEX_ARRAY[i] = RECT_VERTEX_ARRAY[i];

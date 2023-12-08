@@ -14,6 +14,10 @@
 #include "World_Object.h"
 #include "Rectangle_Object.h"
 #include "Primitives.h"
+#include <vector>
+#include "Object_From_File.h"
+#include <string>
+#include "Custom_Object.h"
 
 int main() {
 
@@ -35,12 +39,16 @@ int main() {
 	Engine_Window window(SIMULATION_WINDOW_WIDTH, SIMULATION_WINDOW_HEIGHT);
 
 	//Defining rectangle objects
-	Rectangle_Object Static_Rectangle_Array[3];
-	for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
-		if (i == 0) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 300.f }, 55); }
-		if (i == 1) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 100.f, 700.f }, 55); }
-		if (i == 2) { Static_Rectangle_Array[i] = Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 10.f }, 55); }
-	};
+	std::vector<Rectangle_Object> Static_Rectangle_Array;
+	Static_Rectangle_Array.push_back(Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 300.f }, 55));
+	Static_Rectangle_Array.push_back(Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 100.f, 700.f }, 55));
+	Static_Rectangle_Array.push_back(Rectangle_Object(glm::vec2{ 100.f, 100.f }, glm::vec2{ 300.f, 10.f }, 55));
+	
+	std::string myFile = "Test2.obj";
+
+
+	Custom_Object TEST_OBJECT = Custom_Object(myFile, glm::vec2{ 100.f, 100.f }, glm::vec2{ 10.f, 10.f }, 55);
+
 
 	/*
 	 *
@@ -154,9 +162,11 @@ int main() {
 
 
 		//Translates all objects to match relative position with camera
-		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
+		for (int i = 0; i < Static_Rectangle_Array.size(); i++) {
 			Static_Rectangle_Array[i].ZoomUpdate(ZOOM, SIMULATION_WINDOW_WIDTH, SIMULATION_WINDOW_HEIGHT, CAMERA_POS_X, CAMERA_POS_Y);
 		}
+
+		TEST_OBJECT.ZoomUpdate(ZOOM, SIMULATION_WINDOW_WIDTH, SIMULATION_WINDOW_HEIGHT, CAMERA_POS_X, CAMERA_POS_Y);
 
 		std::cout << Static_Rectangle_Array[0].VERTEX_ARRAY[0].position.x << " : " << Static_Rectangle_Array[0].VERTEX_ARRAY[0].position.y << std::endl;
 
@@ -165,9 +175,13 @@ int main() {
 		SDL_RenderClear(window.simulation_renderer);
 
 		//Draws all vertex array points
-		for (int i = 0; i < sizeof(Static_Rectangle_Array) / sizeof(Static_Rectangle_Array[0]); i++) {
+		for (int i = 0; i < Static_Rectangle_Array.size(); i++) {
 			SDL_RenderGeometry(window.simulation_renderer, wall, Static_Rectangle_Array[i].VERTEX_ARRAY, sizeof(Static_Rectangle_Array[i].VERTEX_ARRAY)/ sizeof(Static_Rectangle_Array[i].VERTEX_ARRAY[0]), Static_Rectangle_Array[i].INDICIES_ARRAY, sizeof(Static_Rectangle_Array[i].INDICIES_ARRAY)/sizeof(Static_Rectangle_Array[i].INDICIES_ARRAY[0]));
 		}
+
+		//std::cout << "TEST TEST TEST" << TEST_OBJECT.VERTEX_ARRAY[0].position.x << std::endl;
+
+		SDL_RenderGeometry(window.simulation_renderer, wall, TEST_OBJECT.VERTEX_ARRAY.data(), TEST_OBJECT.VERTEX_ARRAY.size(), TEST_OBJECT.INDICIES_ARRAY.data(), TEST_OBJECT.INDICIES_ARRAY.size());
 
 
 		//Crosshair
