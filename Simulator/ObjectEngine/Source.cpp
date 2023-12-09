@@ -17,7 +17,8 @@
 #include <vector>
 #include "Object_From_File.h"
 #include <string>
-#include "Custom_Object.h"
+#include "Entity.h"
+#include "Keyboard.h"
 
 int main() {
 
@@ -47,7 +48,7 @@ int main() {
 	std::string myFile = "Test2.obj";
 
 
-	Custom_Object TEST_OBJECT = Custom_Object(myFile, glm::vec2{ 100.f, 100.f }, glm::vec2{ 10.f, 10.f }, 55);
+	Entity TEST_OBJECT = Entity(myFile, glm::vec2{ 100.f, 100.f }, glm::vec2{ 10.f, 10.f }, 55);
 
 
 	/*
@@ -57,108 +58,28 @@ int main() {
 	 */
 
 	std::cout << RECT_VERTEX_ARRAY[0].position.x;
-	
-	SDL_Event Events;
-
-
-	
-
-	bool simRunning = true;
-
-	bool moveUp = false;
-	bool moveDown = false;
-	bool moveRight = false;
-	bool moveLeft = false;
-	bool zoomIn = false;
-	bool zoomOut = false;
 
 	SDL_Texture* wall = IMG_LoadTexture(window.simulation_renderer, "wall.png");
 
+	bool running = true;
+	
+	Keyboard userKeyboard;
 
-	while (simRunning) {
+	while (running) {
 
 		SDL_GetWindowSize(window.engine_window, &SIMULATION_WINDOW_WIDTH, &SIMULATION_WINDOW_HEIGHT);
 
-		while (SDL_PollEvent(&Events) != 0) {
+		while (SDL_PollEvent(&userKeyboard.Events) != 0) {
 
-			if (Events.type == SDL_QUIT) {
-				simRunning = false;
-			}
-
-
-			//Handling for keyboard input
-			if (Events.type == SDL_KEYDOWN) {
-				switch (Events.key.keysym.sym) {
-				case SDLK_w:
-					moveUp = true;
-					break;
-				case SDLK_s:
-					moveDown = true;
-					break;
-				case SDLK_a:
-					moveLeft = true;
-					break;
-				case SDLK_d:
-					moveRight = true;
-					break;
-				case SDLK_r:
-					zoomIn = true;
-					break;
-				case SDLK_f:
-					zoomOut = true;
-				}
-			}
-
-			if (Events.type == SDL_KEYUP) {
-				switch (Events.key.keysym.sym) {
-				case SDLK_w:
-					moveUp = false;
-					break;
-				case SDLK_s:
-					moveDown = false;
-					break;
-				case SDLK_a:
-					moveLeft = false;
-					break;
-				case SDLK_d:
-					moveRight = false;
-					break;
-				case SDLK_r:
-					zoomIn = false;
-					break;
-				case SDLK_f:
-					zoomOut = false;
-				}
-			}
-
+			//Determines what keys are being pressed
+			userKeyboard.update_keybord_events(&running);
+			
 			std::cout << (CAMERA_POS_X) << " : " << (CAMERA_POS_Y) << " ZOOM: " << ZOOM << std::endl;
 
 		}
 
-		if (moveUp == true) {
-			CAMERA_POS_Y -= Speed;
-		}
-		else if (moveDown == true) {
-			CAMERA_POS_Y += Speed;
-		}
-		if (moveLeft == true) {
-			CAMERA_POS_X -= Speed;
-		}
-		else if (moveRight == true) {
-			CAMERA_POS_X += Speed;
-		}
-		if (zoomIn == true) {
-			ZOOM += ZOOM_SPEED;
-			if (ZOOM >= 2) {
-				ZOOM = 2;
-			}
-		}
-		else if (zoomOut == true) {
-			ZOOM -= ZOOM_SPEED;
-			if (ZOOM <= .5) {
-				ZOOM = .5;
-			}
-		}
+		//Updates values based on previously input keyboard presses
+		userKeyboard.update_keypress_values(&CAMERA_POS_X, &CAMERA_POS_Y, &ZOOM, &Speed, &ZOOM_SPEED);
 
 
 		//Translates all objects to match relative position with camera

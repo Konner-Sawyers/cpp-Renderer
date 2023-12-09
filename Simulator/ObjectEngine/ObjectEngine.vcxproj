@@ -133,16 +133,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Custom_Object.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Engine_Window.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Object_From_File.cpp" />
     <ClCompile Include="Rectangle_Object.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="World_Object.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Custom_Object.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Engine_Window.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Object_From_File.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Rectangle_Object.h" />
