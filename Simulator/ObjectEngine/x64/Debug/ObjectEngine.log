@@ -1,14 +1,14 @@
-﻿  Source.cpp
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Primitives.h(9,40): warning C4091: 'static ': ignored on left of 'Shape' when no variable is declared
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(34,24): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(95,71): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(95,65): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(95,60): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(95,54): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(105,190): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(109,75): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(109,68): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(109,61): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(109,54): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
-C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(38,6): warning C4101: 'testArray': unreferenced local variable
+﻿  Engine_Window.cpp
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(37,169): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(42,67): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(42,60): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(42,53): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(42,46): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(50,63): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(50,57): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(50,52): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Engine_Window.cpp(50,46): warning C4244: 'argument': conversion from 'float' to 'Uint8', possible loss of data
+  Source.cpp
+C:\Github\My_Git_Website\PhysicsSims\Simulator\ObjectEngine\Source.cpp(32,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
   ObjectEngine.vcxproj -> C:\Github\My_Git_Website\PhysicsSims\Simulator\x64\Debug\ObjectEngine.exe

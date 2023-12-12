@@ -24,9 +24,6 @@
     <ClCompile Include="World_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rectangle_Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Object_From_File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,12 +39,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="World_Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitives.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Object_From_File.h">
