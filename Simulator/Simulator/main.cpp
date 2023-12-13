@@ -55,10 +55,10 @@ int main() {
 
 
 	bool simRunning = true;
-	
 	auto pastTime = std::chrono::high_resolution_clock::now();
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	auto timeDelta = std::chrono::duration<float>(currentTime - pastTime);
+
 	
 	SDL_Event Events;
 

@@ -24,7 +24,7 @@ public:
 
 	void update_keybord_events(bool* running);
 
-	void update_keypress_values(float* camera_pos_x, float* camera_pos_y, float* zoom, float* cameraSpeed, float* zoomSpeed);
+	void update_keypress_values(float* camera_pos_x, float* camera_pos_y, float* zoom, float* cameraSpeed, float* zoomSpeed, float timeDelta);
 
 };
 

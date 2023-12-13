@@ -107,13 +107,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ObjectEngine\include\SDL2-2.28.5\include;$(SolutionDir)\ObjectEngine\include\SDL2_image-2.6.3\include;$(SolutionDir)\ObjectEngine\include\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ObjectEngine\include\SDL2-2.28.5\include;$(SolutionDir)ObjectEngine\include\SDL2_image-2.6.3\include;$(SolutionDir)ObjectEngine\include\glm;$(SolutionDir)ObjectEngine\include\SDL2_ttf-2.20.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\ObjectEngine\include\SDL2_image-2.6.3\lib\x64;$(SolutionDir)\ObjectEngine\include\SDL2-2.28.5\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ObjectEngine\include\SDL2_image-2.6.3\lib\x64;$(SolutionDir)\ObjectEngine\include\SDL2-2.28.5\lib\x64;$(SolutionDir)\ObjectEngine\include\SDL2_ttf-2.20.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,6 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ObjectEngine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SDL2.dll" />
+    <None Include="SDL2_image.dll" />
+    <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

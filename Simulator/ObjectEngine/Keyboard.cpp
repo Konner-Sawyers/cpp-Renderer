@@ -62,27 +62,27 @@ void Keyboard::update_keybord_events(bool* running) {
 	}
 }
 
-void Keyboard::update_keypress_values(float* camera_pos_x, float* camera_pos_y, float* zoom, float* cameraSpeed, float* zoomSpeed) {
+void Keyboard::update_keypress_values(float* camera_pos_x, float* camera_pos_y, float* zoom, float* cameraSpeed, float* zoomSpeed, float timeDelta) {
 	if (moveUp == true) {
-		*camera_pos_y -= *cameraSpeed;
+		*camera_pos_y -= *cameraSpeed * timeDelta;
 	}
 	else if (moveDown == true) {
-		*camera_pos_y += *cameraSpeed;
+		*camera_pos_y += *cameraSpeed * timeDelta;
 	}
 	if (moveLeft == true) {
-		*camera_pos_x -= *cameraSpeed;
+		*camera_pos_x -= *cameraSpeed * timeDelta;
 	}
 	else if (moveRight == true) {
-		*camera_pos_x += *cameraSpeed;
+		*camera_pos_x += *cameraSpeed * timeDelta;
 	}
 	if (zoomIn == true) {
-		*zoom += *zoomSpeed;
+		*zoom += *zoomSpeed * timeDelta;
 		if (*zoom >= 2) {
 			*zoom = 2;
 		}
 	}
 	else if (zoomOut == true) {
-		*zoom -= *zoomSpeed;
+		*zoom -= *zoomSpeed * timeDelta;
 		if (*zoom <= .5) {
 			*zoom = .5;
 		}
