@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\2016GamingRig\source\repos\KD_Tree\KD_Tree\main.cpp(40): warning C4715: 'Binary_Tree::KD_Insert': not all control paths return a value
+  KD_Tree.vcxproj -> C:\Users\2016GamingRig\source\repos\KD_Tree\x64\Debug\KD_Tree.exe

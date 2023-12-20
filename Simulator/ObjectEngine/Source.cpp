@@ -44,12 +44,20 @@ int main() {
 	std::string myFile = "Circle32Verts.obj";
 	std::string texture_file = "ball.png";
 
+	SDL_Texture* ball = IMG_LoadTexture(window.simulation_renderer, "ball.png");
+	SDL_Texture* wall = IMG_LoadTexture(window.simulation_renderer, "wall.png");
+
 	std::vector <Entity> entity_vector;
-	entity_vector.push_back(Entity(myFile, texture_file, glm::vec2{ 100.f, 100.f }, glm::vec2{ 10.f, 10.f }, 55));
+	entity_vector.push_back(Entity(myFile, ball, glm::vec2{ 100.f, 100.f }, glm::vec2{ 10.f, 10.f }, 55));
 
+	myFile = "Test2.obj";
 
+	entity_vector.push_back(Entity(myFile, wall, glm::vec2{ 10.f, 100.f }, glm::vec2{ 50.f, 0.f }, 55));
+	entity_vector.push_back(Entity(myFile, wall, glm::vec2{ 10.f, 100.f }, glm::vec2{ -50.f, 0.f }, 55));
+	entity_vector.push_back(Entity(myFile, wall, glm::vec2{ 100.f, 10.f }, glm::vec2{ 0.f, 50.f }, 55));
+	entity_vector.push_back(Entity(myFile, wall, glm::vec2{ 100.f, 10.f }, glm::vec2{ 0.f, -50.f }, 55));
 
-	SDL_Texture* wall = IMG_LoadTexture(window.simulation_renderer, "ball.png");
+	
 
 	bool running = true;
 	
@@ -87,7 +95,7 @@ int main() {
 
 		//Draw Geometry
 		for (int i = 0; i < entity_vector.size(); i++) {
-			window.Render_Geometry(&entity_vector[i], wall);
+			window.Render_Geometry(&entity_vector[i]);
 		}
 
 		//Crosshair

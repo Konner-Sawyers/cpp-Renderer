@@ -20,11 +20,14 @@ public:
 	std::vector<int> INDICIES_ARRAY;
 	glm::vec2 pos, scale;
 	std::string texture_file_name;
+	SDL_Texture* texture;
 	float mass;
 
-	Entity(std::string ObjectFileName,std::string texture_file , glm::vec2 scaleIn = { 1,1 }, glm::vec2 posIn = { 0,0 }, float massIn = 1) {
+	Entity(std::string ObjectFileName,SDL_Texture* texture_file , glm::vec2 scaleIn = { 1,1 }, glm::vec2 posIn = { 0,0 }, float massIn = 1) {
 		Object_From_File OBJECT_DATA = Object_From_File(ObjectFileName);
-		texture_file_name = texture_file;
+		//texture_file_name = texture_file;
+		texture = texture_file;
+
 
 		pos = posIn;
 		scale = scaleIn;
